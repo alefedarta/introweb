@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formulario Mestre</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f5f7fb; margin:0; padding:20px; }
+    .container { max-width:480px; margin:40px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+    h1 { font-size:1.25rem; margin:0 0 12px; }
+    label { display:block; font-size:.9rem; margin-top:10px; }
+    input, select { width:100%; padding:8px 10px; margin-top:6px; box-sizing:border-box; border:1px solid #ccd6e0; border-radius:4px; }
+    .row { display:flex; gap:10px; }
+    .row > * { flex:1; }
+    .actions { margin-top:16px; display:flex; gap:10px; align-items:center; }
+    .msg { font-size:.95rem; color:green; }
+    .error { color:#b32c2c; }
+    button { padding:10px 14px; border:0; border-radius:4px; background:#0366d6; color:#fff; cursor:pointer; }
+    button.secondary { background:#e1e8f2; color:#0b3b66; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Cadastro de Usuário</h1>
+    <form id="registerForm" novalidate>
+      <label for="name">Nome completo</label>
+      <input id="name" name="name" type="text" required minlength="2" />
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required />
+
+      <div class="row">
+        <div>
+          <label for="password">Senha</label>
+          <input id="password" name="password" type="password" required minlength="6" />
+        </div>
+        <div>
+          <label for="confirm">Confirmar senha</label>
+          <input id="confirm" name="confirm" type="password" required minlength="6" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="birth">Data de nascimento</label>
+          <input id="birth" name="birth" type="date" />
+        </div>
+        <div>
+          <label for="phone">Telefone</label>
+          <input id="phone" name="phone" type="tel" placeholder="(99) 99999-9999" />
+        </div>
+      </div>
+
+      <label for="gender">Gênero</label>
+      <select id="gender" name="gender">
+        <option value="">-- selecione --</option>
+        <option value="female">Feminino</option>
+        <option value="male">Masculino</option>
+        <option value="other">Outro</option>
+      </select>
+
+      <div class="actions">
+        <button type="submit">Cadastrar</button>
+        <button type="reset" class="secondary">Limpar</button>
+        <div id="feedback" role="status" aria-live="polite" style="margin-left:auto"></div>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    // Validação simples no cliente: checa se senhas coincidem
+    const form = document.getElementById('registerForm');
+    const pwd = document.getElementById('password');
+    const confirm = document.getElementById('confirm');
+    const feedback = document.getElementById('feedback');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      feedback.textContent = '';
+      feedback.className = '';
+
+      if (pwd.value !== confirm.value) {
+        feedback.textContent = 'As senhas não coincidem.';
+        feedback.className = 'error';
+        confirm.focus();
+        return;
+      }
+
+      // Aqui você enviaria os dados ao servidor (fetch / form.submit)
+      // Exibir mensagem de sucesso para demonstração
+      feedback.textContent = 'Cadastro realizado com sucesso!';
+      feedback.className = 'msg';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
